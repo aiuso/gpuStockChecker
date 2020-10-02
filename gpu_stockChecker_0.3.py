@@ -5,8 +5,6 @@ import send
 import schedule
 
 
-
-
 ##### URLs
 
 url = {'evga'   : 'https://www.evga.com/products/product.aspx?pn=10G-P5-3885-KR',
@@ -23,6 +21,7 @@ g.stop_count = 0
 print(f'Started searching for {g.gpu} at {send.timestamp()}...')
 print('____________\n')
 
+
 ##### Search Functions
 
 def search_evga():
@@ -32,7 +31,8 @@ def search_evga():
         print(f'Out of Stock at EVGA. {send.timestamp()}')
     else:
         print(f'{send.timestamp()}... {g.gpu} may be in stock at EVGA! Check url: {url.get("evga")}')
-        print(send.discord_msg(f'{send.timestamp()}... {g.gpu} may be in stock at EVGA! Check url: {url.get("evga")}'))
+        print(send.discord_msg(f'{send.timestamp()}... {g.gpu}'
+                               f' may be in stock at EVGA! Check url: {url.get("evga")}'))
         g.stop_count += 1
 
     time.sleep(5)
@@ -46,7 +46,8 @@ def search_bestbuy():
             print(f'Out of Stock at BestBuy. {send.timestamp()}')
         else:
             print(f'{send.timestamp()}... {g.gpu} may be in stock at BestBuy! Check url: {url.get("bestbuy")}')
-            print(send.discord_msg(f'{send.timestamp()}... {g.gpu} may be in stock at BestBuy! Check url: {url.get("bestbuy")}'))
+            print(send.discord_msg(f'{send.timestamp()}... {g.gpu}'
+                                   f' may be in stock at BestBuy! Check url: {url.get("bestbuy")}'))
             g.stop_count += 1
     time.sleep(5)
 
@@ -59,7 +60,8 @@ def search_newegg():
         print(f'Out of Stock at Newegg. {send.timestamp()}')
     else:
         print(f'{send.timestamp()}... {g.gpu} may be in stock at Newegg! Check url: {url.get("newegg")}')
-        print(send.discord_msg(f'{send.timestamp()}... {g.gpu} may be in stock at Newegg! Check url: {url.get("newegg")}'))
+        print(send.discord_msg(f'{send.timestamp()}... {g.gpu}'
+                               f' may be in stock at Newegg! Check url: {url.get("newegg")}'))
         g.stop_count += 1
     time.sleep(5)
 
@@ -68,7 +70,6 @@ def search_etailers():
     search_evga()
     search_bestbuy()
     search_newegg()
-
 
 
 ##### Searches
