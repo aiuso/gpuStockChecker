@@ -35,7 +35,7 @@ def search_evga():
                                f' may be in stock at EVGA! Check url: {url.get("evga")}'))
         g.stop_count += 1
 
-    time.sleep(5)
+    time.sleep(15)
 
 
 def search_bestbuy():
@@ -49,7 +49,7 @@ def search_bestbuy():
             print(send.discord_msg(f'{send.timestamp()}... {g.gpu}'
                                    f' may be in stock at BestBuy! Check url: {url.get("bestbuy")}'))
             g.stop_count += 1
-    time.sleep(5)
+    time.sleep(15)
 
 
 def search_newegg():
@@ -63,7 +63,7 @@ def search_newegg():
         print(send.discord_msg(f'{send.timestamp()}... {g.gpu}'
                                f' may be in stock at Newegg! Check url: {url.get("newegg")}'))
         g.stop_count += 1
-    time.sleep(5)
+    time.sleep(15)
 
 
 def search_etailers():
@@ -74,13 +74,15 @@ def search_etailers():
 
 ##### Searches
 
+
+#send.scheduled_msg()
 navigate.open_browser()
-schedule.every(1).minutes.do(send.scheduled_msg)
+schedule.every().day.at("16:00").do(send.scheduled_msg)
 
 while g.stop_count < 2:
     schedule.run_pending()
     search_etailers()
-    time.sleep(1)
+    time.sleep(10)
 
 
 
