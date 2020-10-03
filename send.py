@@ -37,7 +37,7 @@ def discord_msg(message):   # Code Credit: Chris Garrett
 
 
 def scheduled_msg():
-    print(discord_msg('Still actively searching for your 3080... Stand by.'))
+    print(discord_msg("Hope you're having a great day. I'm still actively searching for your 3080... Stand by."))
 
 
 
