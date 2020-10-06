@@ -55,14 +55,18 @@ def search_bestbuy():
 def search_newegg():
     navigate.search(url.get('newegg'))
     pointer = g.driver.find_elements_by_class_name('product-inventory')
-    out_of_stock_msg = pointer[0].text.lower()
-    if 'out' in out_of_stock_msg:
-        print(f'Out of Stock at Newegg. {send.timestamp()}')
-    else:
-        print(f'{send.timestamp()}... {g.gpu} may be in stock at Newegg! Check url: {url.get("newegg")}')
-        print(send.discord_msg(f'{send.timestamp()}... {g.gpu}'
-                               f' may be in stock at Newegg! Check url: {url.get("newegg")}'))
-        g.stop_count += 1
+    try:
+        out_of_stock_msg = pointer[0].text.lower()
+        if 'out' in out_of_stock_msg:
+            print(f'Out of Stock at Newegg. {send.timestamp()}')
+        else:
+            print(f'{send.timestamp()}... {g.gpu} may be in stock at Newegg! Check url: {url.get("newegg")}')
+            print(send.discord_msg(f'{send.timestamp()}... {g.gpu}'
+                                   f' may be in stock at Newegg! Check url: {url.get("newegg")}'))
+            g.stop_count += 1
+    except IndexError:
+        print('Unable to check Newegg site...')
+
     time.sleep(15)
 
 
@@ -74,12 +78,12 @@ def search_etailers():
 
 ##### Searches
 
-
+#send.discord_msg('')
 #send.scheduled_msg()
 navigate.open_browser()
 schedule.every().day.at("16:00").do(send.scheduled_msg)
 
-while g.stop_count < 2:
+while g.stop_count < 1:
     schedule.run_pending()
     search_etailers()
     time.sleep(10)
