@@ -27,21 +27,23 @@ print('____________\n')
 def search_evga():
     navigate.search(url.get('evga'))
     out_of_stock = g.driver.find_elements_by_id("LFrame_pnlOutOfStock") # elements will return empty list [] if element absent
+    try:
+        if out_of_stock:
+            print(f'Out of Stock at EVGA. {send.timestamp()}')
 
-    if out_of_stock:
-        print(f'Out of Stock at EVGA. {send.timestamp()}')
-
-    else:
-        print(f"EVGA 'Out of Stock' banner was not found.. checking add to cart. {send.timestamp()}")
-        add_to_cart = g.driver.find_elements_by_class_name("AddToChat")
-
-        if 'add' in add_to_cart[0].text.lower():
-            g.stop_count += 1
-            print(f"EVGA 'Add to Cart' button was found.. sending notification {send.timestamp()}.")
-            print(send.discord_msg(f'{send.timestamp()}... {g.gpu}'
-                                   f' may be in stock at EVGA! Check url: {url.get("evga")}'))
         else:
-            print(f"EVGA 'Add to Cart' button was not found. {send.timestamp()}.")
+            print(f"EVGA 'Out of Stock' banner was not found.. checking add to cart. {send.timestamp()}")
+            add_to_cart = g.driver.find_elements_by_class_name("AddToChat")
+
+            if 'add' in add_to_cart[0].text.lower():
+                g.stop_count += 1
+                print(f"EVGA 'Add to Cart' button was found.. sending notification {send.timestamp()}.")
+                print(send.discord_msg(f'{send.timestamp()}... {g.gpu}'
+                                       f' may be in stock at EVGA! Check url: {url.get("evga")}'))
+            else:
+                print(f"EVGA 'Add to Cart' button was not found. {send.timestamp()}.")
+    except IndexError:
+        print('Unable to check EVGA site...')
 
     time.sleep(15)
 
@@ -106,7 +108,6 @@ def search_etailers():
 ##### Searches
 
 #send.discord_msg('')
-#send.scheduled_msg()
 navigate.open_browser()
 schedule.every().day.at("16:00").do(send.scheduled_msg)
 
